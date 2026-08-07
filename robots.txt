@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://geraldomonte.github.io/concrete-hub/sitemap.xml

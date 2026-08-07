@@ -1,0 +1,28 @@
+# Concrete Knowledge Hub
+
+> Practical knowledge for concrete construction, concrete repair, waterproofing, structural remediation and project delivery — by Geraldo Monte, Construction Project Manager, Waikato / Bay of Plenty, New Zealand. The hub is written to be fully readable by people and by AI assistants: every article is a plain static HTML page with complete text, structured data, and no JavaScript-gated content.
+
+## Knowledge — technical guides
+
+- [Concrete Curing: Why It Matters and How to Do It Right](https://geraldomonte.github.io/concrete-hub/knowledge/concrete-curing.html): what curing is, the standard methods (water, wet coverings, curing compounds, formwork retention), how long to cure, temperature effects, common failures, and answers to the questions contractors and clients most often ask.
+- [Concrete Spalling Repair: A Practical Guide](https://geraldomonte.github.io/concrete-hub/knowledge/concrete-spalling-repair.html): what causes spalling (rebar corrosion, freeze-thaw, ASR, fire), how to assess it, the step-by-step patch repair process, when repair is not enough, and standards references (EN 1504, NZS 3101).
+
+## Ideas — frameworks and lessons
+
+- [Five Lessons from Building a Regional Construction Operation](https://geraldomonte.github.io/concrete-hub/ideas/regional-construction-lessons.html): what it actually takes to stand up a construction branch in a new region — supply chain, labour, delegated authority, systems, and commercial discipline.
+
+## Trends — what is changing in construction
+
+- [AI Is Now Your Customer: What GEO Means for Construction](https://geraldomonte.github.io/concrete-hub/trends/geo-for-construction.html): 35% of consumers start in AI assistants, ChatGPT converts at 15.9% vs 1.76% for Google organic. The five-step playbook for making a construction business discoverable to AI — applied to concrete contracting.
+
+## News — what I am watching
+
+- [News index](https://geraldomonte.github.io/concrete-hub/news/): short briefings on concrete and construction topics with commentary, maintained as things change.
+
+## Stories — from the field
+
+- [Strengthening a River Bridge: A Field Story](https://geraldomonte.github.io/concrete-hub/stories/bridge-strengthening.html): what a seismic strengthening job over a braided river actually involves — access, traffic management, sequencing concrete pours, and the lessons that stick.
+
+## About
+
+- [About Geraldo Monte and this hub](https://geraldomonte.github.io/concrete-hub/): professional background, specialisms (concrete remediation, waterproofing, structural repair, seismic strengthening, regional construction), and why the hub exists.

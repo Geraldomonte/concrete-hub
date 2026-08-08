@@ -1,5 +1,9 @@
 # Concrete Knowledge Hub
 
+> **Brand note (2026-08-08):** this site is being rebranded to **Concreteness**
+> (domain `concreteness.co.nz`, registered and parked). Full concept:
+> [`CONCEPT.md`](CONCEPT.md).
+
 A public hub of concrete construction knowledge, ideas, trends, news and field stories —
 by **Geraldo Monte**, Construction Project Manager (Waikato / Bay of Plenty, New Zealand).
 

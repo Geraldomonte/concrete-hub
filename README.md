@@ -20,9 +20,16 @@ spalling?", the answer can cite this content.
 |---|---|---|
 | Knowledge | `knowledge/` | Technical guides: curing, spalling repair, waterproofing (coming), formwork (coming) |
 | Ideas | `ideas/` | Frameworks and lessons from running construction work |
-| Trends | `trends/` | What is changing: GEO/AI discovery, low-carbon concrete (coming) |
+| Trends | `trends/` | What is changing: low-carbon concrete, digital delivery, AI discovery (coming) |
 | News | `news/` | Short briefings with working commentary |
 | Stories | `stories/` | Sanitized field stories — lessons are the point |
+
+## How this gets found — the access engine
+
+The GEO playbook is applied as the engine that **drives access to the hub** — not as a
+page topic. [`GROWTH.md`](GROWTH.md) is the operating plan (diagnose → publish →
+distribute → track); [`VISIBILITY.md`](VISIBILITY.md) logs the monthly visibility check.
+Baseline 2026-08-08: not yet indexed — first movement expected on a ~2-month horizon.
 
 ## The GEO setup (what's already implemented)
 

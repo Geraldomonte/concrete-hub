@@ -64,7 +64,7 @@ the work actually looks like.
 |---|---|---|
 | **Knowledge** | Technical guides that answer real client questions | Concrete curing; spalling repair (live) — waterproofing, formwork, strengthening (next) |
 | **Ideas** | Frameworks and lessons from running construction work | Five lessons from building a regional operation (live) |
-| **Trends** | What is changing: AI discovery, low-carbon concrete, digital delivery | GEO for construction (live) |
+| **Trends** | What is changing: low-carbon concrete, digital delivery, AI discovery | (coming next) |
 | **News** | Short briefings with working commentary, newest first | Hub launch; aging building stock repair demand (live) |
 | **Stories** | Sanitized field stories — lessons are the point | Strengthening a river bridge (live) |
 
@@ -72,6 +72,11 @@ Every piece ends with **sources** (see §6) and every section carries a "coming 
 list so the site visibly grows.
 
 ## 5. The GEO playbook (why the site is built the way it is)
+
+> **Applied as the access engine, not a page topic.** The playbook *runs* the site — the
+> operating plan is [`GROWTH.md`](GROWTH.md) and tracking is [`VISIBILITY.md`](VISIBILITY.md).
+> (An explainer article about GEO was published 2026-08-08, then archived the same day —
+> it misread the brief.)
 
 Source: the five-step GEO method (Silicon Valley Girl, "How to Rank #1 in AI", 2026-08)
 — the same playbook that took a podcast brand from invisible to 5th of 11 tracked
@@ -123,7 +128,7 @@ The goal is a consistent, machine-readable identity across surfaces:
 
 ## 8. Building blocks already done
 
-- Live static site with 5 sections, 8 published pieces (all verified 200)
+- Live static site with 5 sections, 6 published pieces (all verified 200)
 - GEO plumbing: schema.org on every page, `llms.txt`, `sitemap.xml`, `robots.txt`
 - README plan: content rules, knowledge sourcing & copyright policy, monthly
   visibility check, TODOs

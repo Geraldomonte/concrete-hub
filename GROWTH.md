@@ -8,7 +8,9 @@
 
 - **Indexed?** No — `site:geraldomonte.github.io` returns nothing.
 - **"Concrete repair contractor Hamilton, Waikato"** → Surfprep, Covercrete, Waikato
-  Master Concreters, Total Concrete Solutions. No hub, no Geraldo.
+  Master Concreters, Total Concrete Solutions. No hub, no Geraldo. *(Service-query
+  baseline from the original lead-gen framing — retired when the hub was repositioned
+  2026-08-08; the diagnosis queries are now knowledge queries, below.)*
 - Starting from zero. First movement expected on a ~2-month horizon; next check 2026-09-01.
 
 ## The monthly loop
@@ -19,9 +21,10 @@
 - Update `llms.txt`, `sitemap.xml` (and this plan) when adding pages.
 
 ### 2. Publish against the query map
-One piece per section per month, each answering a real client query — the 5 diagnosis
-queries below first, then gaps competitors don't cover. Every piece: own words, sources
-cited, personal not company, no client names/figures.
+One piece per section per month, each answering a real question someone in the concrete
+industry (or a curious outsider) actually asks — the 5 diagnosis queries below first,
+then gaps competitors don't cover. Every piece: own words, sources cited, personal not
+company, no client names/figures.
 
 ### 3. Distribute — this is where access actually comes from
 - **LinkedIn (main channel).** Post each new article from Geraldo's personal profile as a
@@ -37,8 +40,8 @@ cited, personal not company, no client names/figures.
 
 ### 4. Identity cluster
 - Person schema `sameAs` → LinkedIn URL (**TODO** — get the URL from Geraldo).
-- Consistent naming across surfaces: Concreteness · Geraldo Monte · concrete construction
-  / repair / strengthening · Waikato / Bay of Plenty, NZ.
+- Consistent naming across surfaces: Concreteness · Geraldo Monte · concrete knowledge
+  across precast, repairs, construction and formwork · NZ + Brazil experience.
 - Author byline on every piece (already done).
 
 ### 5. Track monthly (the visibility check)
@@ -48,10 +51,14 @@ the site or name, at what position, and the delta vs last month.
 
 ## The 5 diagnosis queries
 
-1. "Recommend a concrete repair contractor in Waikato, New Zealand."
-2. "Who does seismic strengthening in the Bay of Plenty?"
-3. "What causes concrete spalling?"
-4. "How long should concrete be cured?"
+> **Repositioned 2026-08-08:** the hub is a knowledge hub, not a services site. The
+> diagnosis queries are **knowledge queries** — what people in the industry and the
+> curious actually ask — not contractor-referral queries.
+
+1. "What causes concrete spalling?"
+2. "How long should concrete be cured?"
+3. "What is the difference between precast and cast-in-place concrete?"
+4. "How can AI help with concrete inspections or quality control?"
 5. "Is Geraldo Monte a concrete construction project manager?"
 
 ## Measures of success

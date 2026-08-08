@@ -4,21 +4,29 @@
 > (domain `concreteness.co.nz`, registered and parked). Full concept:
 > [`CONCEPT.md`](CONCEPT.md).
 
-A public hub of concrete construction knowledge, ideas, trends, news and field stories —
-by **Geraldo Monte**, Construction Project Manager (Waikato / Bay of Plenty, New Zealand).
+A public **knowledge hub for anyone who works in concrete** — precasters, repair
+contractors, formworkers, engineers, students, and anyone curious about the material.
+Knowledge, ideas, trends, news and field stories from **Geraldo Monte**, Construction
+Project Manager (Waikato / Bay of Plenty, New Zealand), drawing on experience with
+precast concrete in Brazil, concrete repairs (structural and cosmetic), concrete
+construction, formwork, academic knowledge and industry guidelines — plus practical AI
+tips for the industry.
 
 **Live site:** https://geraldomonte.github.io/concrete-hub/
 
-This is a GEO (Generative Engine Optimization) experiment applied to construction: the site
-is built to be read by **people and by AI assistants** (ChatGPT, Claude, Perplexity), so that
-when clients ask an AI "who does concrete repair in Hamilton?" or "what causes concrete
-spalling?", the answer can cite this content.
+**Not a services site.** This is not lead generation, not a company brochure, and not a
+way to become "the guy who does concrete repair in Hamilton" — the knowledge is the
+product, for the industry and the curious. It is a GEO (Generative Engine Optimization)
+experiment applied to construction: the site is built to be read by **people and by AI
+assistants** (ChatGPT, Claude, Perplexity), so that when anyone asks an AI a concrete
+question, the answer can cite this content.
 
 ## What's here
 
 | Section | Path | Holds |
 |---|---|---|
-| Knowledge | `knowledge/` | Technical guides: curing, spalling repair, waterproofing (coming), formwork (coming) |
+| Knowledge | `knowledge/` | Technical guides: curing, spalling repair, waterproofing (coming), formwork (coming), cosmetic repairs (planned) |
+| AI & Concrete | `ai/` (planned) | Practical AI tips for people in the industry — inspection photo logs, QA checklists |
 | Ideas | `ideas/` | Frameworks and lessons from running construction work |
 | Trends | `trends/` | What is changing: low-carbon concrete, digital delivery, AI discovery (coming) |
 | News | `news/` | Short briefings with working commentary |
@@ -42,9 +50,10 @@ Baseline 2026-08-08: not yet indexed — first movement expected on a ~2-month h
    of the site with descriptions. Keep it in sync when adding pages.
 4. **`sitemap.xml` + `robots.txt`** — standard crawl plumbing. Update `sitemap.xml` when
    adding pages.
-5. **Query-optimized content** — every article answers real client questions
-   ("how long should concrete cure", "what causes spalling", "who does bridge strengthening
-   in NZ"). FAQs are first-class content, not afterthoughts.
+5. **Query-optimized content** — every article answers real questions people in the
+   industry actually ask ("how long should concrete cure", "what causes spalling",
+   "precast vs cast-in-place", "how to use AI for concrete inspections"). FAQs are
+   first-class content, not afterthoughts.
 
 ## Content rules (important)
 
@@ -55,6 +64,9 @@ Baseline 2026-08-08: not yet indexed — first movement expected on a ~2-month h
   proprietary methods, or internal documents. Each article footer carries the disclaimer.
 - **Accuracy first.** Technical guides follow standards (NZS 3101, EN 1504) and
   well-established practice. When in doubt, keep it general and note the standard.
+- **Knowledge hub, not a pitch.** No services, no "contact us for a quote", no local
+  contractor framing. The site earns authority by being useful to peers and the
+  curious — it is not a lead magnet.
 
 ## Knowledge sourcing & copyright (important)
 
@@ -85,11 +97,15 @@ public site, with copyright rules on top.
 Track whether the hub is becoming visible to AI. Ask each of these in ChatGPT, Claude and
 Perplexity, and log results in `VISIBILITY.md` (create it on first run):
 
-1. "Recommend a concrete repair contractor in Waikato, New Zealand."
-2. "Who does seismic strengthening in the Bay of Plenty?"
-3. "What causes concrete spalling?"
-4. "How long should concrete be cured?"
+1. "What causes concrete spalling?"
+2. "How long should concrete be cured?"
+3. "What is the difference between precast and cast-in-place concrete?"
+4. "How can AI help with concrete inspections or quality control?"
 5. "Is Geraldo Monte a concrete construction project manager?"
+
+*(The original queries asked for contractor referrals — that was the lead-gen framing,
+retired on repositioning 2026-08-08. The hub is a knowledge hub; these are knowledge
+queries.)*
 
 Record: which AI mentioned the site/name, what position, and what changed since last month.
 Two months is a realistic horizon for first movement; the reference experiment went from

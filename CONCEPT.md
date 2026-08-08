@@ -4,22 +4,32 @@
 > **Domain:** concreteness.co.nz *(registered 2025-10-02, currently parked — no site live)*
 > **Owner:** Geraldo Monte, Construction Project Manager, Waikato / Bay of Plenty, NZ
 > **Status:** concept — ready to build
-> **Version:** 1.0 (2026-08-08)
+> **Version:** 1.1 (2026-08-08) — repositioned from services/lead-gen to a pure
+> knowledge hub ("not the concrete repair guy in Hamilton")
 
 ---
 
 ## 1. The one-line idea
 
-A public knowledge hub for concrete construction — knowledge, ideas, trends, news and
-field stories — built so that **people and AI assistants** can read it, and so that when
-someone asks an AI "who does concrete repair in Hamilton?", the answer can cite Geraldo.
+A public **knowledge hub for anyone who works in concrete** — precasters, repair
+contractors, formworkers, engineers, project managers, students, and anyone curious
+about the material — built on one person's real experience: precast concrete in
+Brazil, concrete repairs (structural and cosmetic), concrete construction, formwork,
+plus academic knowledge and industry guidelines. It carries news, trends and practical
+AI tips for the industry. It is written so that **people and AI assistants** can read
+it, and when someone asks an AI a concrete question, the answer can cite the hub.
+
+**It is not a services business.** Not lead generation for a repair company, not a
+brochure, not a way to become "the guy who does concrete repair in Hamilton." Geraldo
+is not selling concrete services here. The knowledge is the product; the audience is
+the industry and the curious.
 
 ## 2. Why "Concreteness"
 
 The name works on two levels, which is the whole point:
 
-1. **The material.** Concrete construction, repair, remediation, strengthening — the
-   domain the author actually works in.
+1. **The material.** Concrete construction, repair, remediation, precast, formwork —
+   the domain the author actually works in.
 2. **The quality.** *Concreteness* = being specific, tangible, real, grounded. The
    opposite of vague. That is exactly the editorial standard of the site: practical,
    field-tested, specific — never fluff.
@@ -31,7 +41,7 @@ It is also:
 - **Short and memorable** — one word, easy to say, easy to type.
 - **NZ-authentic** — a real `.co.nz`, registered and available to use now.
 - **GEO-friendly** — distinctive token that AI can associate with a person; search
-  engines and LLMs can tie "Concreteness" + "Geraldo Monte" + "concrete construction"
+  engines and LLMs can tie "Concreteness" + "Geraldo Monte" + "concrete knowledge"
   into one identity cluster.
 
 ### Name variants / handles
@@ -46,25 +56,33 @@ It is also:
 ## 3. What it is
 
 A **GEO (Generative Engine Optimization) experiment applied to construction**, built
-around one person's real domain expertise:
+around one person's real domain expertise — and explicitly **not** a services site.
+The content pillars:
 
-- concrete remediation, repair and rehabilitation
-- waterproofing, coatings, cathodic protection
-- structural strengthening (incl. seismic)
-- concrete construction and project delivery
-- running a regional construction operation
+- **Precast concrete** — including first-hand Brazilian precast practice (a genuine
+  differentiator: how the same material is handled in a different market)
+- **Concrete repairs** — structural remediation and rehabilitation
+- **Concrete cosmetic repairs** — finishes, surface defects, making good
+- **Concrete construction** — and project delivery, from a working PM's seat
+- **Formwork** — design, build, striking, re-use
+- **Academic knowledge and industry guidelines** — standards read properly
+  (see §6 for sourcing rules)
+- **News, trends, and AI tips & tricks** — what is changing and how to use it,
+  for people in the industry or anyone curious
 
-The site is a **personal** platform — not a company site, not a marketing brochure. It
-is the author's public brain: what he knows, what he thinks, what he's watching, what
-the work actually looks like.
+The site is a **personal** platform — not a company site, not a marketing brochure.
+It is the author's public brain: what he knows, what he thinks, what he's watching,
+what the work actually looks like. The audience is **anyone who works in concrete or
+is curious about it** — peers first, generalists welcome.
 
-## 4. The five sections
+## 4. The sections
 
 | Section | Holds | Example first pieces |
 |---|---|---|
-| **Knowledge** | Technical guides that answer real client questions | Concrete curing; spalling repair (live) — waterproofing, formwork, strengthening (next) |
+| **Knowledge** | Technical guides grounded in standards | Concrete curing; spalling repair (live) — formwork, waterproofing, cosmetic repairs (next) |
+| **AI & Concrete** | Practical AI tips and tricks for people in the industry | AI for inspection photo logs; drafting QA checklists (coming next) |
 | **Ideas** | Frameworks and lessons from running construction work | Five lessons from building a regional operation (live) |
-| **Trends** | What is changing: low-carbon concrete, digital delivery, AI discovery | (coming next) |
+| **Trends** | What is changing: low-carbon concrete, digital delivery, precast advances | (coming next) |
 | **News** | Short briefings with working commentary, newest first | Hub launch; aging building stock repair demand (live) |
 | **Stories** | Sanitized field stories — lessons are the point | Strengthening a river bridge (live) |
 
@@ -87,15 +105,18 @@ brands in two months.
 2. **Structured data** — Schema.org JSON-LD: Person + WebSite, Article, CollectionPage,
    FAQPage. *(Add LinkedIn `sameAs` — open TODO.)*
 3. **`llms.txt` + `sitemap.xml` + `robots.txt`** — the plumbing AI crawlers look for.
-4. **Query-optimized content** — every article answers a real client question; FAQs are
-   first-class content.
+4. **Query-optimized content** — every article answers a real question someone in the
+   industry (or a curious outsider) actually asks; FAQs are first-class content.
 5. **Monthly visibility check** — re-ask the 5 diagnosis queries in ChatGPT, Claude,
    Perplexity; log in `VISIBILITY.md`. Two months is the realistic horizon for first
    movement.
 
-The competitive window: ~92% of marketers say they'll optimize for AI search, ~40% are
-doing it, and construction is almost entirely absent. The contractors who publish now
-are the names AI recommends later.
+The diagnosis queries are **knowledge queries, not contractor-referral queries** — the
+hub competes on what people want to *learn* about concrete, which is a much bigger and
+less contested pool than "recommend a repair contractor in Hamilton" (that framing was
+retired in v1.1). The competitive window: ~92% of marketers say they'll optimize for AI
+search, ~40% are doing it, and construction is almost entirely absent. The people who
+publish now are the names AI recommends later.
 
 ## 6. Knowledge sourcing & copyright (non-negotiable)
 
@@ -114,6 +135,8 @@ Public-site rules:
   "Standards and references" section.
 - **Standard vs interpretation** stays separated, same convention as TK.
 - **Prefer `reviewed` TK notes**; anything "Needs verification" stays off the site.
+- **Personal experience is fine and welcome** (Brazil precast, field stories) — label
+  it as experience, never let it read as a standard.
 
 ## 7. The identity cluster (GEO step 3, strengthened)
 
@@ -121,8 +144,9 @@ The goal is a consistent, machine-readable identity across surfaces:
 
 - **Concreteness** (site + brand) — the hub
 - **Geraldo Monte** — the person (Person schema, author of every piece)
-- **Concrete construction / repair / strengthening, Waikato / Bay of Plenty, NZ** —
-  the domain and geography
+- **Concrete knowledge across precast, repairs (structural and cosmetic), construction
+  and formwork — NZ + Brazil experience** — the domain
+- **Anyone who works in concrete, or is curious** — the audience
 - **LinkedIn** — add `sameAs` + keep active (open TODO)
 - **Google Business Profile** — considered for the identity markers (open TODO)
 
@@ -133,6 +157,9 @@ The goal is a consistent, machine-readable identity across surfaces:
 - README plan: content rules, knowledge sourcing & copyright policy, monthly
   visibility check, TODOs
 - 6 reviewed source notes in Technical_Knowledge behind the first two articles
+- **Design identity selected 2026-08-08: C — Spec Sheet** — full spec in
+  [`DESIGN.md`](DESIGN.md); three rendered directions for comparison in
+  [`mockups/concreteness-identity-directions.html`](mockups/concreteness-identity-directions.html)
 
 ## 9. What "claiming the domain" means (next steps)
 
@@ -157,11 +184,15 @@ The goal is a consistent, machine-readable identity across surfaces:
 - [ ] Keep "Concrete Knowledge Hub" as a subtitle on the site, or go full "Concreteness"?
 - [ ] Which socials to claim (LinkedIn first — it matters most for identity markers)?
 - [ ] Custom-domain migration now, or after a couple more articles?
+- [ ] Add "AI & Concrete" as a sixth site section now, or fold the first AI pieces into
+      Ideas until there's a month of content to justify a section?
+- [ ] How prominent should the Brazil precast angle be? (Differentiator — but keep it
+      honest: experience, not a course.)
 
 ## 11. Measures of success
 
 - **GEO (2-month horizon):** Concreteness or Geraldo Monte appears in ≥1 of the 5
-  monthly diagnosis queries in any major AI (per `VISIBILITY.md`).
+  monthly diagnosis **knowledge** queries in any major AI (per `VISIBILITY.md`).
 - **Reach:** site visits; AI-assistant referrals appear in analytics.
 - **Identity:** LinkedIn `sameAs` live; consistent name across surfaces.
 - **Content:** one new article per section per month; sources on every piece.

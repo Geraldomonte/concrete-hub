@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concreteness — Identity Directions (mockup)</title>
+<meta name="description" content="Three identity directions for Concreteness, the concrete knowledge hub: A — Cast Slab, B — Field Journal, C — Spec Sheet. Same content and structure; only the identity changes.">
+<style>
+/* ============================================================
+   CONCRETENESS — IDENTITY DIRECTIONS
+   Three directions, one DOM. Tokens swap per direction.
+   Per conventions/frontend.md: system fonts only, no framework,
+   no build step, WCAG AA, reduced motion, 390px clean.
+   ============================================================ */
+
+/* ---------- Direction A — Cast Slab (default) ---------- */
+#stage {
+  --canvas:        #eae5dd;   /* warm cement grey */
+  --surface:       #f7f4ee;   /* off-white concrete */
+  --ink:           #26221d;   /* wet-concrete charcoal */
+  --muted:         #5d5649;   /* warm grey */
+  --line:          #d9d2c6;
+  --accent:        #b4451c;   /* rebar rust — links */
+  --accent-strong: #c2410c;   /* oxide rust — kickers/display */
+  --focus:         #1769ff;
+  --radius:        4px;
+  --shadow:        0 10px 30px rgba(38,34,29,.10);
+  --font-display:  Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-body:     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:     ui-monospace, Menlo, Consolas, monospace;
+  --header-bg:     var(--ink);
+  --header-ink:    #f7f4ee;
+  --header-line:   var(--accent-strong);
+}
+
+/* ---------- Direction B — Field Journal ---------- */
+#stage[data-direction="b"] {
+  --canvas:        #f2ecdf;   /* aged paper */
+  --surface:       #faf6ec;
+  --ink:           #2a2519;   /* warm near-black */
+  --muted:         #6e6452;
+  --line:          #e0d6bf;
+  --accent:        #3e5a6d;   /* field ink blue */
+  --accent-strong: #2f4656;
+  --focus:         #1769ff;
+  --radius:        2px;
+  --shadow:        0 1px 0 rgba(60,50,30,.05), 0 4px 10px rgba(60,50,30,.07);
+  --font-display:  Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  --font-body:     Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+  --font-mono:     ui-monospace, Menlo, Consolas, monospace;
+  --header-bg:     var(--canvas);
+  --header-ink:    var(--ink);
+  --header-line:   var(--accent);
+}
+
+/* ---------- Direction C — Spec Sheet ---------- */
+#stage[data-direction="c"] {
+  --canvas:        #eef0f2;   /* cool grey-white */
+  --surface:       #ffffff;
+  --ink:           #1f252b;   /* graphite */
+  --muted:         #5b646d;
+  --line:          #d7dce1;
+  --accent:        #c23a17;   /* spec red annotation */
+  --accent-strong: #a02f10;
+  --focus:         #1769ff;
+  --radius:        0;
+  --shadow:        0 1px 2px rgba(31,37,43,.06);
+  --font-display:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-body:     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono:     ui-monospace, Menlo, Consolas, monospace;
+  --header-bg:     var(--surface);
+  --header-ink:    var(--ink);
+  --header-line:   var(--accent-strong);
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: #1a1815;
+  color: #e8e4dd;
+  line-height: 1.65;
+  font-size: 16px;
+}
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- Mockup chrome (outside the stage) ---------- */
+.mockup-shell { max-width: 1080px; margin: 0 auto; padding: 24px 16px 48px; }
+.mockup-bar { margin-bottom: 20px; }
+.mockup-bar h1 { font-size: 1.25rem; letter-spacing: -.01em; }
+.mockup-bar p { color: #a8a29a; font-size: .9rem; margin: 4px 0 14px; }
+.switcher { display: flex; flex-wrap: wrap; gap: 8px; }
+.switcher button {
+  font: 600 .85rem/1 var(--font-body);
+  padding: 9px 14px;
+  border: 1px solid #44403a;
+  border-radius: 6px;
+  background: #2a2724;
+  color: #e8e4dd;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.switcher button:hover { border-color: #a8a29a; }
+.switcher button[aria-pressed="true"] {
+  background: #c2410c;
+  border-color: #c2410c;
+  color: #fff;
+}
+.mockup-foot { margin-top: 28px; color: #a8a29a; font-size: .8rem; max-width: 720px; }
+.mockup-foot code { background: #2a2724; padding: 1px 5px; border-radius: 4px; }
+
+/* ---------- Direction note strip (character + palette) ---------- */
+.dir-note { display: none; margin: 0 0 18px; padding: 14px 16px; border-radius: 8px; background: #23201c; }
+#stage[data-direction="a"] .dir-note-a,
+#stage[data-direction="b"] .dir-note-b,
+#stage[data-direction="c"] .dir-note-c { display: block; }
+.dir-note .d-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.dir-note .d-name { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: #f5f2ec; }
+.dir-note .d-rec { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #fff; background: #c2410c; padding: 2px 8px; border-radius: 999px; }
+.dir-note .d-char { color: #b6afa4; font-size: .88rem; }
+.dir-note .d-swatches { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.dir-note .sw { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: .7rem; color: #b6afa4; }
+.dir-note .chip { width: 22px; height: 22px; border-radius: 4px; border: 1px solid rgba(255,255,255,.2); }
+
+/* ============================================================
+   STAGE — the site itself
+   ============================================================ */
+#stage {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0,0,0,.45);
+}
+
+/* ---------- Header ---------- */
+.site-header { background: var(--header-bg); color: var(--header-ink); border-bottom: 3px solid var(--header-line); }
+.site-header .inner { max-width: 900px; margin: 0 auto; padding: 1.4rem 1.4rem 1rem; }
+.wordmark { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: -.02em; line-height: 1.1; }
+.wordmark a { color: var(--header-ink); text-decoration: none; }
+.tagline { color: var(--header-ink); opacity: .78; font-size: .95rem; margin-top: .3rem; }
+
+.site-nav {
+  max-width: 900px; margin: 0 auto; padding: 0 1.4rem .95rem;
+  display: flex; flex-wrap: wrap; gap: .3rem 1.2rem;
+  font-weight: 600; font-size: .93rem;
+}
+.site-nav a { color: var(--header-ink); opacity: .8; text-decoration: none; padding: .2rem 0; border-bottom: 2px solid transparent; }
+.site-nav a:hover { opacity: 1; }
+.site-nav a.is-current { border-bottom-color: var(--header-line); opacity: 1; }
+
+/* Direction-specific header texture */
+#stage[data-direction="a"] .site-header {
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0 2px, transparent 2px 8px);
+  background-color: var(--header-bg);
+}
+#stage[data-direction="b"] .site-header { background-image: none; }
+#stage[data-direction="b"] .wordmark { font-style: normal; }
+#stage[data-direction="b"] .tagline { font-style: italic; }
+#stage[data-direction="c"] .site-header { border-bottom-width: 2px; }
+#stage[data-direction="c"] .wordmark { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 1.25rem; }
+#stage[data-direction="c"] .tagline { font-family: var(--font-mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; opacity: .7; }
+
+/* ---------- Layout ---------- */
+main { max-width: 900px; margin: 0 auto; padding: 2rem 1.4rem 3rem; }
+h1, h2, h3 { font-family: var(--font-display); }
+h1 { font-size: 2rem; letter-spacing: -.02em; line-height: 1.2; }
+h2 { font-size: 1.4rem; margin: 1.8rem 0 .75rem; letter-spacing: -.01em; }
+h3 { font-size: 1.05rem; margin: 0 0 .4rem; }
+p { margin: 0 0 1rem; }
+a { color: var(--accent); }
+ul, ol { margin: 0 0 1rem 1.3rem; }
+li { margin-bottom: .35rem; }
+time { color: var(--muted); }
+
+/* ---------- Hero ---------- */
+.hero { margin-bottom: 2.2rem; }
+.kicker {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--accent-strong);
+  margin-bottom: .5rem;
+}
+#stage[data-direction="a"] .kicker { font-family: var(--font-body); letter-spacing: .1em; }
+.lede { font-size: 1.12rem; color: var(--muted); max-width: 60ch; }
+
+/* ---------- Cards ---------- */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin: 1.2rem 0 1.8rem; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.05rem 1.1rem;
+  text-decoration: none;
+  color: var(--ink);
+  display: block;
+  box-shadow: var(--shadow);
+  transition: border-color .15s, transform .15s;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card h3 { font-family: var(--font-display); color: var(--accent-strong); }
+.card p { margin: 0; font-size: .9rem; color: var(--muted); }
+.card time { display: block; margin-top: .5rem; font-size: .8rem; }
+
+/* C-specific card corner ticks */
+#stage[data-direction="c"] .card { position: relative; border: 1px solid var(--line); box-shadow: none; }
+#stage[data-direction="c"] .card::before,
+#stage[data-direction="c"] .card::after {
+  content: ""; position: absolute; width: 10px; height: 10px; border-color: var(--accent-strong); border-style: solid; opacity: .55;
+}
+#stage[data-direction="c"] .card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+#stage[data-direction="c"] .card::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+/* ---------- Article fragment ---------- */
+article.prose { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.8rem 2rem; box-shadow: var(--shadow); }
+#stage[data-direction="b"] article.prose { border-left: 3px solid var(--accent); }
+article.prose .meta { color: var(--muted); font-size: .88rem; margin-bottom: 1.2rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+#stage[data-direction="b"] .meta { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .08em; font-size: .74rem; }
+
+/* Signature components */
+.callout { border-radius: var(--radius); padding: .9rem 1.1rem; margin: 0 0 1rem; }
+.callout .c-label {
+  font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em;
+  font-size: .7rem; font-weight: 700; display: block; margin-bottom: .35rem;
+}
+.callout p { margin: 0; }
+.callout.std { background: var(--canvas); border-left: 3px solid var(--accent); }
+.callout.std .c-label { color: var(--accent-strong); }
+.callout.prac { background: var(--canvas); border-left: 3px solid var(--muted); }
+.callout.prac .c-label { color: var(--muted); }
+.callout.field {
+  background: transparent; border: 1px dashed var(--accent); border-left-width: 3px;
+  font-style: italic;
+}
+.callout.field .c-label { color: var(--accent-strong); font-style: normal; }
+#stage[data-direction="c"] .callout { border-left-width: 2px; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: .92rem; }
+th, td { text-align: left; padding: .5rem .7rem; border-bottom: 1px solid var(--line); }
+th { font-weight: 700; border-bottom: 2px solid var(--ink); }
+#stage[data-direction="c"] th { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .06em; font-size: .74rem; border-bottom: 2px solid var(--ink); }
+
+/* FAQ */
+.faq details { margin-bottom: .7rem; padding: .75rem 1rem; background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius); }
+.faq summary { cursor: pointer; font-weight: 700; }
+.faq details p { margin: .4rem 0 0; }
+
+/* Standards block */
+.references { margin-top: 1.6rem; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--canvas); }
+.references h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; font-family: var(--font-mono); margin-bottom: .6rem; color: var(--accent-strong); }
+.references ul { margin: 0; font-size: .9rem; }
+.references li { margin-bottom: .3rem; }
+.references .note { color: var(--muted); font-size: .82rem; font-style: italic; margin-bottom: .5rem; }
+
+/* Footer */
+.site-footer { max-width: 900px; margin: 0 auto; padding: 1.4rem 1.4rem 2.4rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
+.site-footer .about { margin-bottom: .4rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  article.prose { padding: 1.3rem 1.1rem; }
+  h1 { font-size: 1.55rem; }
+  .site-nav { gap: .2rem .9rem; font-size: .88rem; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="mockup-shell">
+
+  <header class="mockup-bar">
+    <h1>Concreteness — identity directions</h1>
+    <p>Three directions. Same content, same structure, same components — only the identity changes. Toggle to compare.</p>
+    <div class="switcher" role="group" aria-label="Identity direction">
+      <button type="button" data-dir="a" aria-pressed="false">A — Cast Slab</button>
+      <button type="button" data-dir="b" aria-pressed="false">B — Field Journal</button>
+      <button type="button" data-dir="c" aria-pressed="true">C — Spec Sheet</button>
+    </div>
+  </header>
+
+  <div id="stage" data-direction="c">
+
+    <!-- Direction notes -->
+    <div class="dir-note dir-note-a">
+      <div class="d-head"><span class="d-name">A — Cast Slab</span><span class="d-rec" style="background:#5b646d">Runner-up</span></div>
+      <p class="d-char">Calm, grounded, material — like a well-finished architectural concrete panel. Serif display over a warm cement canvas, rebar-rust accent, subtle board-form lines.</p>
+      <div class="d-swatches">
+        <span class="sw"><span class="chip" style="background:#eae5dd"></span>#eae5dd canvas</span>
+        <span class="sw"><span class="chip" style="background:#f7f4ee"></span>#f7f4ee surface</span>
+        <span class="sw"><span class="chip" style="background:#26221d"></span>#26221d ink</span>
+        <span class="sw"><span class="chip" style="background:#b4451c"></span>#b4451c rust</span>
+        <span class="sw"><span class="chip" style="background:#c2410c"></span>#c2410c oxide</span>
+      </div>
+    </div>
+    <div class="dir-note dir-note-b">
+      <div class="d-head"><span class="d-name">B — Field Journal</span></div>
+      <p class="d-char">Warm, tactile, personal — site-diary energy. Paper tones, serif throughout, ruled lines, dated mono field notes. Story-first.</p>
+      <div class="d-swatches">
+        <span class="sw"><span class="chip" style="background:#f2ecdf"></span>#f2ecdf paper</span>
+        <span class="sw"><span class="chip" style="background:#faf6ec"></span>#faf6ec surface</span>
+        <span class="sw"><span class="chip" style="background:#2a2519"></span>#2a2519 ink</span>
+        <span class="sw"><span class="chip" style="background:#3e5a6d"></span>#3e5a6d ink blue</span>
+      </div>
+    </div>
+    <div class="dir-note dir-note-c">
+      <div class="d-head"><span class="d-name">C — Spec Sheet</span><span class="d-rec">Selected 2026-08-08</span></div>
+      <p class="d-char">Precise, technical, information-dense — engineering authority. Hairline rules, numbered mono metadata, spec-red annotations, corner-ticked cards.</p>
+      <div class="d-swatches">
+        <span class="sw"><span class="chip" style="background:#eef0f2"></span>#eef0f2 canvas</span>
+        <span class="sw"><span class="chip" style="background:#ffffff"></span>#ffffff surface</span>
+        <span class="sw"><span class="chip" style="background:#1f252b"></span>#1f252b graphite</span>
+        <span class="sw"><span class="chip" style="background:#c23a17"></span>#c23a17 spec red</span>
+      </div>
+    </div>
+
+    <!-- The site -->
+    <header class="site-header">
+      <div class="inner">
+        <p class="wordmark"><a href="#">Concreteness</a></p>
+        <p class="tagline">Concrete knowledge, made concrete.</p>
+      </div>
+      <nav class="site-nav" aria-label="Main">
+        <a class="is-current" href="#">Knowledge</a>
+        <a href="#">Ideas</a>
+        <a href="#">Trends</a>
+        <a href="#">News</a>
+        <a href="#">Stories</a>
+      </nav>
+    </header>
+
+    <main>
+
+      <section class="hero">
+        <p class="kicker">Welcome</p>
+        <h1>Concrete knowledge, made concrete.</h1>
+        <p class="lede">A public hub of practical knowledge for concrete construction, concrete repair, waterproofing and structural remediation — plus the ideas, trends, news and field stories behind delivering them well.</p>
+      </section>
+
+      <section aria-labelledby="sections">
+        <h2 id="sections">What's in the hub</h2>
+        <div class="grid">
+          <a class="card" href="#"><h3>Knowledge</h3><p>Technical guides: curing, repair methods, waterproofing, materials and standards — written to be actually useful on site.</p></a>
+          <a class="card" href="#"><h3>Ideas</h3><p>Frameworks and lessons from running construction work — commercial discipline, systems, and building a region from zero.</p></a>
+          <a class="card" href="#"><h3>Trends</h3><p>What is changing in construction: AI discovery, low-carbon concrete, digital delivery — and what it means for contractors.</p></a>
+          <a class="card" href="#"><h3>News</h3><p>Short briefings on concrete and construction topics I am watching, with working commentary rather than headlines.</p></a>
+          <a class="card" href="#"><h3>Stories</h3><p>What jobs actually look like from the inside — the planning, the pours, the weather windows, and the lessons that stick.</p></a>
+        </div>
+      </section>
+
+      <section aria-labelledby="article">
+        <h2 id="article">Article page — signature components</h2>
+        <article class="prose">
+          <h1>Concrete Curing: Why It Matters and How to Do It Right</h1>
+          <p class="meta">By Geraldo Monte · <time datetime="2026-08-08">8 August 2026</time> · Concrete construction</p>
+
+          <p>Curing is the most underrated step in concrete construction. It is also the one most often skipped, rushed, or done badly — because by the time the failure shows up, the forms are long gone and the crew has moved to the next job. But curing decides whether the surface of your concrete is hard, dense and durable, or dusty, cracked and permeable.</p>
+
+          <div class="callout std">
+            <span class="c-label">Standard says</span>
+            <p>NZS 3101.1:2006 and Concrete NZ's Guide to Concrete Construction require a <strong>minimum of 7 days</strong> of continuous moisture retention for ordinary Portland cement concrete at moderate temperatures. Durability-critical elements are routinely specified at 14 days or more.</p>
+          </div>
+
+          <div class="callout prac">
+            <span class="c-label">In practice</span>
+            <p>Measure the curing period from placement, not from when someone gets around to it. Interrupted curing — wet for two days, dry for two, wet again — is far less effective than continuous curing. Formwork retention is free curing: don't strip early to chase the programme.</p>
+          </div>
+
+          <div class="callout field">
+            <span class="c-label">Field note</span>
+            <p>On a bridge deck job, skipping the cure to hold the programme came up more than once. We held it. The cylinders passed, the surface stayed sound, and nobody remembers the two days we "lost" — but everyone would have remembered a dusty, cracked deck.</p>
+          </div>
+
+          <h2>The standard curing methods</h2>
+          <table>
+            <thead><tr><th>Method</th><th>How it works</th><th>Good for</th></tr></thead>
+            <tbody>
+              <tr><td>Water ponding</td><td>Standing water held on slabs</td><td>Horizontal slabs, flatwork</td></tr>
+              <tr><td>Wet coverings</td><td>Burlap, geotextile or sand kept continuously wet</td><td>Slabs, walls, columns, bridge decks</td></tr>
+              <tr><td>Curing compounds</td><td>Membrane-forming liquid sprayed to seal moisture in</td><td>Large slabs, pavements, where wet methods are impractical</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Frequently asked questions</h2>
+          <div class="faq">
+            <details>
+              <summary>How long should concrete be cured?</summary>
+              <p>A minimum of 7 days of continuous moisture retention is standard practice for ordinary Portland cement concrete at moderate temperatures. Longer curing (14–28 days) improves durability, and hot, windy or dry conditions require more aggressive curing, not less.</p>
+            </details>
+          </div>
+
+          <div class="references">
+            <h3>Standards and references</h3>
+            <p class="note">Written in the author's own words; for the authoritative text, consult the standards and guides below.</p>
+            <ul>
+              <li><strong>NZS 3101.1:2006</strong> — Concrete structures standard; durability, cover and curing requirements. <a href="#">Standards New Zealand</a></li>
+              <li><strong>Concrete NZ — Guide to Concrete Construction (GTCC, 2020)</strong> — industry practice on curing methods and durations. <a href="#">concretenz.org.nz</a></li>
+              <li><strong>ACI 308R-16</strong> — Guide to External Curing of Concrete; the international reference. <a href="#">concrete.org (ACI)</a></li>
+            </ul>
+          </div>
+
+        </article>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <p class="about"><strong>Concreteness</strong> — by Geraldo Monte, Construction Project Manager, Waikato / Bay of Plenty, New Zealand.</p>
+      <p>Practical knowledge for concrete construction, repair and project delivery. Written to be read by people and by AI assistants. Views expressed here are personal and do not represent any employer.</p>
+    </footer>
+
+  </div><!-- /stage -->
+
+  <footer class="mockup-foot">
+    <p>Mockup for design-gate discussion only — not the live site. Follows repo conventions: system fonts only, no framework, no build step, WCAG AA contrast, visible focus, reduced-motion support, no horizontal scroll at 390&nbsp;px. Real articles keep full text, schema.org JSON-LD and <code>llms.txt</code>/<code>sitemap.xml</code> sync when this becomes the production design.</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var buttons = document.querySelectorAll('.switcher button');
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      stage.setAttribute('data-direction', btn.getAttribute('data-dir'));
+      buttons.forEach(function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

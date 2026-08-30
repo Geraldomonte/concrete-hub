@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concreteness — Element Figure Sketches (hybrid, rendered) (mockup)</title>
+<meta name="description" content="Hybrid concrete element figures for Concreteness, rendered Revit-style: shaded faces, noise-mottled materials, soft contact shadows, crisp edge lines — with the spec annotation overlay on top. Identity locked (Spec Sheet, DESIGN.md).">
+<style>
+/* ============================================================
+   CONCRETENESS — ELEMENT FIGURE SKETCHES, HYBRID + RENDER
+   Identity locked (Direction C — Spec Sheet, per DESIGN.md).
+   Figure rendering: Revit "shaded with edges" style — light
+   from above, gradient-shaded faces, feTurbulence mottle on
+   materials, soft contact shadows, crisp edge lines. The spec
+   annotation layer (leaders, dims, standard tags) sits on top.
+   Rust-red only for corrosion/strands/sealant/annotation.
+   Wood, soil, concrete, steel tones are PROPOSED tokens
+   (flagged for DESIGN.md — not yet in the token source).
+   ============================================================ */
+#stage {
+  --canvas:        #eef0f2;
+  --surface:       #ffffff;
+  --ink:           #1f252b;
+  --muted:         #5b646d;
+  --line:          #d7dce1;
+  --accent:        #c23a17;
+  --accent-strong: #a02f10;
+  --focus:         #1769ff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #1a1815;
+  color: #e8e4dd;
+  line-height: 1.65;
+  font-size: 16px;
+}
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.mockup-shell { max-width: 1080px; margin: 0 auto; padding: 24px 16px 48px; }
+.mockup-bar { margin-bottom: 20px; }
+.mockup-bar h1 { font-size: 1.25rem; letter-spacing: -.01em; }
+.mockup-bar p { color: #a8a29a; font-size: .9rem; margin: 4px 0 14px; max-width: 760px; }
+.mockup-foot { margin-top: 28px; color: #a8a29a; font-size: .8rem; max-width: 820px; }
+.mockup-foot code { background: #2a2724; padding: 1px 5px; border-radius: 4px; }
+
+/* ============================================================
+   STAGE — the site shell (identity C, Spec Sheet)
+   ============================================================ */
+#stage {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0,0,0,.45);
+}
+
+.site-header { background: var(--surface); border-bottom: 3px solid var(--accent-strong); }
+.site-header .inner { max-width: 960px; margin: 0 auto; padding: 1.4rem 1.4rem 1rem; }
+.wordmark { font-weight: 700; font-size: 1.6rem; letter-spacing: .06em; line-height: 1.1; }
+.wordmark a { color: var(--ink); text-decoration: none; }
+.tagline {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  text-transform: uppercase; font-size: .72rem; letter-spacing: .14em;
+  color: var(--muted); margin-top: .3rem;
+}
+.site-nav {
+  max-width: 960px; margin: 0 auto; padding: 0 1.4rem .95rem;
+  display: flex; flex-wrap: wrap; gap: .3rem 1.2rem;
+  font-weight: 600; font-size: .93rem;
+}
+.site-nav a { color: var(--ink); opacity: .75; text-decoration: none; padding: .2rem 0; border-bottom: 2px solid transparent; }
+.site-nav a[aria-current="page"] { opacity: 1; color: var(--accent-strong); border-bottom-color: var(--accent-strong); }
+.site-nav a:hover { opacity: 1; border-bottom-color: var(--accent); }
+
+main { max-width: 960px; margin: 0 auto; padding: 2rem 1.4rem 3rem; }
+
+.dir-kicker {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: .72rem; text-transform: uppercase; letter-spacing: .14em;
+  color: var(--accent-strong); margin-bottom: .35rem;
+}
+.dir-head h2 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.02em; line-height: 1.15; }
+.dir-desc { color: var(--muted); max-width: 62ch; margin-top: .5rem; }
+
+.legend {
+  margin-top: 1.2rem; padding: 12px 14px;
+  background: var(--surface); border: 1px solid var(--line);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: .7rem; letter-spacing: .02em;
+}
+.legend .l-head { font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-strong); margin-bottom: 6px; }
+.legend ul { list-style: none; }
+.legend li { margin: 3px 0; color: var(--muted); }
+.legend li b { color: var(--ink); font-weight: 600; }
+.legend .sw { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border: 1px solid rgba(31,37,43,.25); vertical-align: -1px; }
+
+.group-h {
+  margin: 2rem 0 .9rem; padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .16em;
+  color: var(--accent-strong);
+}
+.group-h .g-count { color: var(--muted); font-weight: 400; letter-spacing: .08em; }
+
+.figgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+figure.figcard {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: border-color .15s, transform .15s, box-shadow .15s;
+}
+figure.figcard::before, figure.figcard::after {
+  content: ""; position: absolute; width: 10px; height: 10px;
+  border: 2px solid var(--accent-strong); opacity: .55; z-index: 2;
+}
+figure.figcard::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+figure.figcard::after  { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+figure.figcard:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 2px 8px rgba(31,37,43,.08); }
+.fig-wrap { padding: 12px 12px 4px; }
+.fig-wrap svg { display: block; width: 100%; height: auto; }
+figcaption { padding: 10px 14px 14px; }
+figcaption .f-title {
+  display: block; font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--ink);
+}
+figcaption .f-sub { display: block; font-size: .82rem; color: var(--muted); margin-top: 3px; }
+
+/* Annotation text halo (readable over rendered fills) */
+.lbl { paint-order: stroke; stroke: #ffffff; stroke-width: 3px; stroke-linejoin: round; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<div class="mockup-shell">
+  <div class="mockup-bar">
+    <h1>Concreteness — Element Figure Sketches (hybrid · rendered)</h1>
+    <p>Revit-style presentation on top of the hybrid system: gradient-shaded faces, noise-mottled
+       materials, soft contact shadows, crisp edge lines. The spec annotation layer (leaders, dims,
+       standard tags) stays on top. Identity locked (C — Spec Sheet).</p>
+  </div>
+
+  <div id="stage">
+    <header class="site-header">
+      <div class="inner">
+        <div class="wordmark"><a href="#">CONCRETENESS</a></div>
+        <div class="tagline">Concrete knowledge, made concrete.</div>
+      </div>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#">Knowledge</a>
+        <a href="#">Ideas</a>
+        <a href="#">Trends</a>
+        <a href="#">News</a>
+        <a href="#" aria-current="page">Stories</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="dir-head">
+        <div class="dir-kicker">Hybrid direction — rendered</div>
+        <h2>Element figures</h2>
+        <p class="dir-desc">Isometric cutaways for shape, dimensioned elevations for geometry,
+        numbered build-up sections for layering — now rendered like a model: light from above,
+        mottled materials, soft shadows. The drawing stays the drawing; it just reads as real.</p>
+      </div>
+
+      <div class="legend">
+        <div class="l-head">Render system</div>
+        <ul>
+          <li><b>Shading</b> — light from above: top faces lightest, front mid, side faces dark; gradient per face</li>
+          <li><b>Materials</b> — feTurbulence mottle on every concrete/wood/soil surface (no flat fills)</li>
+          <li><b>Light &amp; depth</b> — soft contact shadows under elements, crisp edge lines, ambient darkening at face junctions</li>
+          <li><b>Colour</b> — rust-red for corrosion/strands/sealant/annotation only; steel for ties/dowels</li>
+          <li><span class="sw" style="background:#c9a26f"></span><b>Wood</b> <span class="sw" style="background:#a8926f"></span><b>Soil</b> <span class="sw" style="background:#cfc9bf"></span><b>Concrete</b> <span class="sw" style="background:#9aa3ab"></span><b>Steel</b> — proposed tokens, not yet in DESIGN.md</li>
+          <li><b>Annotations</b> — numbered leader callouts with white halo · standard tag at the foot of build-up figures</li>
+        </ul>
+      </div>
+
+      <h3 class="group-h">Precast <span class="g-count">— shape &amp; geometry</span></h3>
+      <div class="figgrid">
+
+        <figure class="figcard">
+          <div class="fig-wrap">
+            <svg viewBox="0 0 300 200" role="img" aria-label="Prestressed beam isometric cutaway, rendered">
+              <!-- contact shadow -->
+              <ellipse cx="150" cy="182" rx="92" ry="15" fill="url(#shadowGrad)"/>
+              <!-- hidden edges -->
+              <line x1="104.1" y1="81.5" x2="104.1" y2="51.5" stroke="#9aa3ab" stroke-width="1" stroke-dasharray="4 3"/>
+              <line x1="104.1" y1="81.5" x2="74.7" y2="98.5" stroke="#9aa3ab" stroke-width="1" stroke-dasharray="4 3"/>
+              <line x1="104.1" y1="81.5" x2="225.3" y2="151.5" stroke="#9aa3ab" stroke-width="1" stroke-dasharray="4 3"/>
+              <!-- right side face (darkest) -->
+              <polygon points="225.3,121.5 195.9,138.5 195.9,168.5 225.3,151.5" fill="url(#precastSide)" filter="url(#conc)"/>
+              <!-- front face, right of cut (inner tone) -->
+              <polygon points="161.3,118.5 195.9,138.5 195.9,168.5 161.3,148.5" fill="#8f8a82" filter="url(#conc)"/>
+              <!-- front face, left of cut -->
+              <polygon points="74.7,68.5 161.3,118.5 161.3,148.5 74.7,98.5" fill="url(#precastFront)" filter="url(#conc)"/>
+              <polygon points="74.7,68.5 161.3,118.5 161.3,148.5 74.7,98.5" fill="url(#aggregate)" opacity="0.4"/>
+              <!-- section plane at cut -->
+              <polygon points="190.7,101.5 161.3,118.5 161.3,148.5 190.7,131.5" fill="url(#secPlaneGrad)" filter="url(#concSoft)"/>
+              <polygon points="190.7,101.5 161.3,118.5 161.3,148.5 190.7,131.5" fill="url(#aggregate-sec)" opacity="0.5"/>
+              <!-- top face (lightest) -->
+              <polygon points="104.1,51.5 225.3,121.5 195.9,138.5 74.7,68.5" fill="url(#precastTop)" filter="url(#conc)"/>
+              <polygon points="104.1,51.5 225.3,121.5 195.9,138.5 74.7,68.5" fill="url(#aggregate)" opacity="0.4"/>
+              <!-- ambient occlusion at face junctions -->
+              <g stroke="#8d867c" stroke-width="1.4" opacity="0.55" fill="none">
+                <line x1="74.7" y1="68.5" x2="161.3" y2="118.5"/>
+                <line x1="161.3" y1="118.5" x2="195.9" y2="138.5"/>
+                <line x1="195.9" y1="138.5" x2="225.3" y2="121.5"/>
+                <line x1="161.3" y1="118.5" x2="161.3" y2="148.5"/>
+                <line x1="190.7" y1="101.5" x2="161.3" y2="118.5"/>
+                <line x1="161.3" y1="148.5" x2="190.7" y2="131.5"/>
+              </g>
+              <!-- 7-wire strand cluster (metallic rust) -->
+              <circle cx="180.5" cy="127.6" r="2.8" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <circle cx="176" cy="130.2" r="2.8" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <circle cx="171.5" cy="127.6" r="2.8" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <circle cx="171.5" cy="122.4" r="2.8" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <circle cx="176" cy="119.8" r="2.8" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <circle cx="180.5" cy="122.4" r="2.8" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <circle cx="176" cy="125" r="2.8" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <!-- strand leader -->
+              <line x1="176" y1="125" x2="196" y2="99" stroke="#c23a17" stroke-width="1"/>
+              <text x="200" y="102" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="7.5" fill="#a02f10">7-WIRE STRAND</text>
+              <text x="292" y="24" text-anchor="end" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="8.5" font-weight="700" fill="#a02f10">PRESTRESSED BEAM — CUTAWAY</text>
+            </svg>
+          </div>
+          <figcaption><span class="f-title">Prestressed beam — isometric cutaway</span><span class="f-sub">Mottled cast faces, shaded per face, soft ground shadow; strand cluster at the cut.</span></figcaption>
+        </figure>
+
+        <figure class="figcard">
+          <div class="fig-wrap">
+            <svg viewBox="0 0 300 190" role="img" aria-label="Precast wall panel elevation, rendered">
+              <!-- soil band -->
+              <rect x="40" y="125" width="150" height="22" fill="url(#soilGrad)" filter="url(#soilF)"/>
+              <rect x="40" y="125" width="150" height="22" fill="url(#soil-dots)" opacity="0.55"/>
+              <line x1="40" y1="125" x2="190" y2="125" stroke="#1f252b" stroke-width="1.4"/>
+              <!-- panel contact shadow on soil -->
+              <ellipse cx="115" cy="130" rx="82" ry="6" fill="url(#shadowGrad)"/>
+              <!-- panel -->
+              <rect x="40" y="45" width="150" height="80" fill="url(#precastFront)" filter="url(#conc)"/>
+              <rect x="40" y="45" width="150" height="80" fill="url(#aggregate)" opacity="0.4"/>
+              <rect x="40" y="45" width="150" height="80" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <!-- top highlight -->
+              <line x1="40" y1="45" x2="190" y2="45" stroke="#f2efe9" stroke-width="1.6" opacity="0.9"/>
+              <!-- lifting loops (steel) -->
+              <path d="M72,45 v-8 a5,5 0 0 1 10,0 v8" fill="none" stroke="url(#steelGrad)" stroke-width="2"/>
+              <path d="M148,45 v-8 a5,5 0 0 1 10,0 v8" fill="none" stroke="url(#steelGrad)" stroke-width="2"/>
+              <!-- dims -->
+              <line x1="40" y1="45" x2="40" y2="31" stroke="#5b646d" stroke-width="1"/>
+              <line x1="190" y1="45" x2="190" y2="31" stroke="#5b646d" stroke-width="1"/>
+              <line x1="40" y1="37" x2="190" y2="37" stroke="#5b646d" stroke-width="1"/>
+              <line x1="36" y1="33" x2="44" y2="41" stroke="#1f252b" stroke-width="1.3"/>
+              <line x1="194" y1="33" x2="186" y2="41" stroke="#1f252b" stroke-width="1.3"/>
+              <text x="115" y="29" text-anchor="middle" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="#1f252b">W</text>
+              <line x1="190" y1="85" x2="215" y2="85" stroke="#5b646d" stroke-width="1"/>
+              <text x="219" y="89" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="#1f252b">T</text>
+              <!-- tie-down inserts -->
+              <circle cx="72" cy="125" r="3.4" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.8"/>
+              <circle cx="148" cy="125" r="3.4" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.8"/>
+              <text x="270" y="168" text-anchor="end" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="7.5" fill="#a02f10">TIE-DOWN INSERTS</text>
+            </svg>
+          </div>
+          <figcaption><span class="f-title">Precast wall panel — dimensioned elevation</span><span class="f-sub">Steel lifting loops, rust inserts at the bearing, contact shadow on the soil.</span></figcaption>
+        </figure>
+
+        <figure class="figcard">
+          <div class="fig-wrap">
+            <svg viewBox="0 0 300 170" role="img" aria-label="Driven prestressed pile in ground, rendered">
+              <!-- soil band -->
+              <rect x="30" y="130" width="240" height="22" fill="url(#soilGrad)" filter="url(#soilF)"/>
+              <rect x="30" y="130" width="240" height="22" fill="url(#soil-dots)" opacity="0.55"/>
+              <line x1="30" y1="130" x2="270" y2="130" stroke="#1f252b" stroke-width="1.4"/>
+              <!-- pile -->
+              <rect x="90" y="26" width="22" height="104" fill="url(#precastFront)" filter="url(#conc)"/>
+              <rect x="90" y="26" width="22" height="104" fill="url(#aggregate)" opacity="0.4"/>
+              <polygon points="90,130 112,130 101,150" fill="url(#precastFront)" filter="url(#conc)"/>
+              <polygon points="90,130 112,130 101,150" fill="url(#aggregate)" opacity="0.4"/>
+              <rect x="90" y="26" width="22" height="104" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <polygon points="90,130 112,130 101,150" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <!-- pile contact shadow at ground -->
+              <ellipse cx="101" cy="131" rx="16" ry="4" fill="url(#shadowGrad)"/>
+              <!-- dims -->
+              <line x1="90" y1="26" x2="73" y2="26" stroke="#5b646d" stroke-width="1"/>
+              <line x1="90" y1="130" x2="73" y2="130" stroke="#5b646d" stroke-width="1"/>
+              <line x1="79" y1="26" x2="79" y2="130" stroke="#5b646d" stroke-width="1"/>
+              <line x1="75" y1="26" x2="83" y2="34" stroke="#1f252b" stroke-width="1.3"/>
+              <line x1="75" y1="130" x2="83" y2="122" stroke="#1f252b" stroke-width="1.3"/>
+              <text x="71" y="82" text-anchor="end" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="#1f252b">L</text>
+              <text x="101" y="164" text-anchor="middle" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="8" fill="#5b646d">POINTED TOE</text>
+              <line x1="30" y1="130" x2="118" y2="140" stroke="#5b646d" stroke-width="1"/>
+              <text x="122" y="144" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="7.5" fill="#5b646d">GROUND LINE</text>
+              <!-- section with strand bundle -->
+              <rect x="180" y="52" width="46" height="46" fill="url(#secPlaneGrad)" filter="url(#concSoft)"/>
+              <rect x="180" y="52" width="46" height="46" fill="url(#aggregate-sec)" opacity="0.5"/>
+              <rect x="180" y="52" width="46" height="46" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <circle cx="196" cy="70" r="2.6" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <circle cx="210" cy="70" r="2.6" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <circle cx="196" cy="82" r="2.6" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <circle cx="210" cy="82" r="2.6" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.6"/>
+              <text x="203" y="112" text-anchor="middle" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="8" fill="#5b646d">SECTION</text>
+              <line x1="180" y1="98" x2="180" y2="132" stroke="#5b646d" stroke-width="1"/>
+              <line x1="226" y1="98" x2="226" y2="132" stroke="#5b646d" stroke-width="1"/>
+              <line x1="180" y1="126" x2="226" y2="126" stroke="#5b646d" stroke-width="1"/>
+              <line x1="176" y1="122" x2="184" y2="130" stroke="#1f252b" stroke-width="1.3"/>
+              <line x1="230" y1="122" x2="222" y2="130" stroke="#1f252b" stroke-width="1.3"/>
+              <text x="203" y="146" text-anchor="middle" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="#1f252b">b</text>
+            </svg>
+          </div>
+          <figcaption><span class="f-title">Driven prestressed pile — in ground</span><span class="f-sub">Pointed toe below the ground line; 4-strand bundle in the section.</span></figcaption>
+        </figure>
+      </div>
+
+      <h3 class="group-h">In-situ &amp; formwork <span class="g-count">— build-up &amp; layering</span></h3>
+      <div class="figgrid">
+
+        <figure class="figcard">
+          <div class="fig-wrap">
+            <svg viewBox="0 0 360 240" role="img" aria-label="Slab on grade section, rendered build-up">
+              <!-- compacted subgrade -->
+              <rect x="30" y="146" width="220" height="60" fill="url(#soilGrad)" filter="url(#soilF)"/>
+              <rect x="30" y="146" width="220" height="60" fill="url(#soil-dots)" opacity="0.5"/>
+              <!-- hardfill -->
+              <rect x="30" y="112" width="220" height="34" fill="url(#hardfillGrad)" filter="url(#concSoft)"/>
+              <rect x="30" y="112" width="220" height="34" fill="url(#hardfill-dots)" opacity="0.6"/>
+              <rect x="30" y="112" width="220" height="34" fill="none" stroke="#1f252b" stroke-width="1.2"/>
+              <!-- DPE membrane -->
+              <line x1="30" y1="112" x2="250" y2="112" stroke="#1f252b" stroke-width="1.4" stroke-dasharray="7 3"/>
+              <!-- concrete slab -->
+              <rect x="30" y="60" width="220" height="52" fill="url(#slabGrad)" filter="url(#conc)"/>
+              <rect x="30" y="60" width="220" height="52" fill="url(#aggregate-sec)" opacity="0.45"/>
+              <rect x="30" y="60" width="220" height="52" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <!-- top surface highlight -->
+              <line x1="30" y1="60" x2="250" y2="60" stroke="#f2efe9" stroke-width="1.6" opacity="0.9"/>
+              <!-- layer contact shadows -->
+              <rect x="30" y="112" width="220" height="3" fill="#1f252b" opacity="0.14"/>
+              <rect x="30" y="146" width="220" height="3" fill="#1f252b" opacity="0.14"/>
+              <!-- saw-cut joint + sealant -->
+              <polygon points="116,60 124,60 122,80 118,80" fill="url(#rustFill)" stroke="#6e2f12" stroke-width="1"/>
+              <!-- mesh bars in section -->
+              <g fill="url(#steelGrad)" stroke="#1f252b" stroke-width="1.1">
+                <circle cx="40" cy="78" r="2.4"/><circle cx="70" cy="78" r="2.4"/><circle cx="100" cy="78" r="2.4"/><circle cx="130" cy="78" r="2.4"/>
+                <circle cx="160" cy="78" r="2.4"/><circle cx="190" cy="78" r="2.4"/><circle cx="220" cy="78" r="2.4"/>
+                <circle cx="40" cy="96" r="2.4"/><circle cx="70" cy="96" r="2.4"/><circle cx="100" cy="96" r="2.4"/><circle cx="130" cy="96" r="2.4"/>
+                <circle cx="160" cy="96" r="2.4"/><circle cx="190" cy="96" r="2.4"/><circle cx="220" cy="96" r="2.4"/>
+              </g>
+              <!-- slab thickness dim -->
+              <line x1="30" y1="60" x2="16" y2="60" stroke="#5b646d" stroke-width="1"/>
+              <line x1="30" y1="112" x2="16" y2="112" stroke="#5b646d" stroke-width="1"/>
+              <line x1="20" y1="60" x2="20" y2="112" stroke="#5b646d" stroke-width="1"/>
+              <line x1="16" y1="60" x2="24" y2="68" stroke="#1f252b" stroke-width="1.3"/>
+              <line x1="16" y1="112" x2="24" y2="104" stroke="#1f252b" stroke-width="1.3"/>
+              <text x="13" y="90" text-anchor="end" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="#1f252b">t</text>
+              <!-- leaders + labels -->
+              <g stroke="#5b646d" stroke-width="1">
+                <line x1="70" y1="64" x2="250" y2="70"/>
+                <line x1="123" y1="74" x2="250" y2="96"/>
+                <line x1="175" y1="72" x2="250" y2="122"/>
+                <line x1="60" y1="112" x2="250" y2="148"/>
+                <line x1="60" y1="134" x2="250" y2="174"/>
+                <line x1="60" y1="170" x2="250" y2="200"/>
+              </g>
+              <g fill="#1f252b" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="8.5">
+                <text x="254" y="70">01 · SLAB — 100 THK</text>
+                <text x="254" y="96">02 · SAW-CUT JOINT</text>
+                <text x="254" y="122">03 · MESH — SECTION</text>
+                <text x="254" y="148">04 · DPE MEMBRANE</text>
+                <text x="254" y="174">05 · HARDFILL — AP40</text>
+                <text x="254" y="200">06 · SUBGRADE</text>
+              </g>
+              <text x="30" y="232" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="7.5" fill="#5b646d">STANDARD — NZS 3604:2011 · BRANZ SLAB-ON-GROUND</text>
+            </svg>
+          </div>
+          <figcaption><span class="f-title">Slab on grade — build-up section</span><span class="f-sub">Rendered layers with contact shadows; mesh reads as steel, joint reads as sealant.</span></figcaption>
+        </figure>
+
+        <figure class="figcard">
+          <div class="fig-wrap">
+            <svg viewBox="0 0 340 210" role="img" aria-label="Wall formwork section, rendered">
+              <!-- concrete core (wet placing tone) -->
+              <rect x="60" y="40" width="160" height="120" fill="url(#placingGrad)" filter="url(#conc)"/>
+              <rect x="60" y="40" width="160" height="120" fill="url(#aggregate-sec)" opacity="0.45"/>
+              <!-- form faces -->
+              <rect x="42" y="40" width="16" height="120" fill="url(#woodGrad)" filter="url(#woodF)"/>
+              <rect x="42" y="40" width="16" height="120" fill="url(#grain)" opacity="0.6"/>
+              <rect x="222" y="40" width="16" height="120" fill="url(#woodGrad)" filter="url(#woodF)"/>
+              <rect x="222" y="40" width="16" height="120" fill="url(#grain)" opacity="0.6"/>
+              <rect x="42" y="40" width="16" height="120" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <rect x="222" y="40" width="16" height="120" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <!-- inner face highlights -->
+              <line x1="57" y1="40" x2="57" y2="160" stroke="#f4e8d4" stroke-width="1.4" opacity="0.7"/>
+              <line x1="223" y1="40" x2="223" y2="160" stroke="#f4e8d4" stroke-width="1.4" opacity="0.7"/>
+              <!-- studs -->
+              <rect x="24" y="52" width="14" height="12" fill="url(#studGrad)" filter="url(#woodF)"/>
+              <rect x="24" y="94" width="14" height="12" fill="url(#studGrad)" filter="url(#woodF)"/>
+              <rect x="24" y="136" width="14" height="12" fill="url(#studGrad)" filter="url(#woodF)"/>
+              <rect x="242" y="52" width="14" height="12" fill="url(#studGrad)" filter="url(#woodF)"/>
+              <rect x="242" y="94" width="14" height="12" fill="url(#studGrad)" filter="url(#woodF)"/>
+              <rect x="242" y="136" width="14" height="12" fill="url(#studGrad)" filter="url(#woodF)"/>
+              <g fill="none" stroke="#1f252b" stroke-width="1.2">
+                <rect x="24" y="52" width="14" height="12"/><rect x="24" y="94" width="14" height="12"/><rect x="24" y="136" width="14" height="12"/>
+                <rect x="242" y="52" width="14" height="12"/><rect x="242" y="94" width="14" height="12"/><rect x="242" y="136" width="14" height="12"/>
+              </g>
+              <!-- ties (steel) -->
+              <line x1="42" y1="70" x2="238" y2="70" stroke="url(#steelGrad)" stroke-width="1.6"/>
+              <line x1="42" y1="130" x2="238" y2="130" stroke="url(#steelGrad)" stroke-width="1.6"/>
+              <circle cx="140" cy="70" r="2.2" fill="#2e3439"/>
+              <circle cx="140" cy="130" r="2.2" fill="#2e3439"/>
+              <rect x="39" y="67.5" width="5" height="5" fill="url(#steelGrad)" stroke="#1f252b" stroke-width="1"/>
+              <rect x="236" y="67.5" width="5" height="5" fill="url(#steelGrad)" stroke="#1f252b" stroke-width="1"/>
+              <rect x="39" y="127.5" width="5" height="5" fill="url(#steelGrad)" stroke="#1f252b" stroke-width="1"/>
+              <rect x="236" y="127.5" width="5" height="5" fill="url(#steelGrad)" stroke="#1f252b" stroke-width="1"/>
+              <!-- leaders + labels -->
+              <g stroke="#5b646d" stroke-width="1">
+                <line x1="50" y1="44" x2="118" y2="54"/>
+                <line x1="31" y1="100" x2="118" y2="80"/>
+                <line x1="140" y1="70" x2="118" y2="104"/>
+                <line x1="140" y1="130" x2="118" y2="134"/>
+              </g>
+              <g fill="#1f252b" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="8.5">
+                <text x="122" y="58">01 · PLYWOOD FACE — 17 MM</text>
+                <text x="122" y="84">02 · STUD — 100 × 50</text>
+                <text x="122" y="108">03 · TIE</text>
+                <text x="122" y="138">04 · CONCRETE — PLACING</text>
+              </g>
+              <!-- width dim -->
+              <line x1="42" y1="160" x2="42" y2="178" stroke="#5b646d" stroke-width="1"/>
+              <line x1="238" y1="160" x2="238" y2="178" stroke="#5b646d" stroke-width="1"/>
+              <line x1="42" y1="172" x2="238" y2="172" stroke="#5b646d" stroke-width="1"/>
+              <line x1="38" y1="168" x2="46" y2="176" stroke="#1f252b" stroke-width="1.3"/>
+              <line x1="242" y1="168" x2="234" y2="176" stroke="#1f252b" stroke-width="1.3"/>
+              <text x="140" y="194" text-anchor="middle" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="#1f252b">W</text>
+              <text x="14" y="206" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="7.5" fill="#5b646d">STANDARD — NZS 3109:1997 · FORMWORK FOR CONCRETE</text>
+            </svg>
+          </div>
+          <figcaption><span class="f-title">In-situ wall — formwork section</span><span class="f-sub">Warm wood faces with grain and inner highlight; steel ties; wet concrete tone.</span></figcaption>
+        </figure>
+      </div>
+
+      <h3 class="group-h">Repair &amp; details <span class="g-count">— the how-it-goes-together figures</span></h3>
+      <div class="figgrid">
+
+        <figure class="figcard">
+          <div class="fig-wrap">
+            <svg viewBox="0 0 340 210" role="img" aria-label="Spall repair build-up section, rendered">
+              <!-- substrate (aged concrete) -->
+              <rect x="8" y="46" width="120" height="118" fill="url(#concDarkGrad)" filter="url(#conc)"/>
+              <rect x="8" y="46" width="120" height="118" fill="url(#aggregate-sec)" opacity="0.5"/>
+              <rect x="8" y="46" width="120" height="118" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <!-- spalled pocket + repair mortar -->
+              <path d="M128,58 C120,62 108,70 104,84 C100,98 102,114 108,126 C114,138 122,146 128,150 Z" fill="url(#mortarGrad)" filter="url(#concSoft)"/>
+              <path d="M128,58 C120,62 108,70 104,84 C100,98 102,114 108,126 C114,138 122,146 128,150 Z" fill="none" stroke="#1f252b" stroke-width="1.2"/>
+              <path d="M104,84 Q114,86 126,86 M106,104 Q115,106 125,106 M108,124 Q116,126 125,126" fill="none" stroke="#aab3bc" stroke-width="0.8" opacity="0.7"/>
+              <!-- corroded rebar: rust glow, steel bar, stain ticks -->
+              <circle cx="110" cy="92" r="9" fill="url(#rustGlow)"/>
+              <circle cx="112" cy="118" r="9" fill="url(#rustGlow)"/>
+              <circle cx="110" cy="92" r="6" fill="url(#steelGrad)" stroke="#1f252b" stroke-width="1.2"/>
+              <circle cx="110" cy="92" r="1.6" fill="#2e3439"/>
+              <circle cx="112" cy="118" r="6" fill="url(#steelGrad)" stroke="#1f252b" stroke-width="1.2"/>
+              <circle cx="112" cy="118" r="1.6" fill="#2e3439"/>
+              <g stroke="#c23a17" stroke-width="1" opacity="0.65">
+                <line x1="105" y1="98" x2="103" y2="104"/><line x1="110" y1="98" x2="109" y2="105"/><line x1="115" y1="98" x2="117" y2="104"/>
+                <line x1="107" y1="124" x2="105" y2="130"/><line x1="112" y1="124" x2="111" y2="131"/><line x1="117" y1="124" x2="119" y2="130"/>
+              </g>
+              <!-- bonding coat -->
+              <path d="M128,58 C120,62 109,70 105.5,84 C101.5,98 104,114 110,126 C115,138 123,146 128,150" fill="none" stroke="#a02f10" stroke-width="1.4"/>
+              <!-- protective coating -->
+              <rect x="128" y="58" width="3.5" height="92" fill="url(#rustFill)"/>
+              <!-- leaders + labels -->
+              <g stroke="#5b646d" stroke-width="1">
+                <line x1="129.5" y1="62" x2="158" y2="54"/>
+                <line x1="70" y1="48" x2="158" y2="74"/>
+                <line x1="110" y1="92" x2="158" y2="98"/>
+                <line x1="124" y1="112" x2="158" y2="122"/>
+                <line x1="120" y1="142" x2="158" y2="146"/>
+              </g>
+              <g fill="#1f252b" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="8.5">
+                <text x="162" y="58">01 · COATING</text>
+                <text x="162" y="78">02 · SUBSTRATE — CONCRETE</text>
+                <text x="162" y="102">03 · REBAR — CORRODED</text>
+                <text x="162" y="126">04 · BONDING COAT — PRIMER</text>
+                <text x="162" y="150">05 · REPAIR MORTAR</text>
+              </g>
+              <text x="8" y="196" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="7.5" fill="#5b646d">STANDARD — EN 1504-10 · ACI 546R-96 · REPAIR BUILD-UP</text>
+            </svg>
+          </div>
+          <figcaption><span class="f-title">Spall repair — build-up section</span><span class="f-sub">Steel bar with rust glow and stain ticks; aged substrate vs fresh mortar; primer and coating after.</span></figcaption>
+        </figure>
+
+        <figure class="figcard">
+          <div class="fig-wrap">
+            <svg viewBox="0 0 360 220" role="img" aria-label="Beam to corbel connection elevation, rendered">
+              <!-- wall (aged precast) -->
+              <rect x="30" y="20" width="40" height="180" fill="url(#concDarkGrad)" filter="url(#conc)"/>
+              <rect x="30" y="20" width="40" height="180" fill="url(#aggregate)" opacity="0.4"/>
+              <rect x="30" y="20" width="40" height="180" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <!-- corbel -->
+              <polygon points="70,100 150,100 150,118 126,152 70,152" fill="url(#precastFront)" filter="url(#conc)"/>
+              <polygon points="70,100 150,100 150,118 126,152 70,152" fill="url(#aggregate)" opacity="0.4"/>
+              <polygon points="70,100 150,100 150,118 126,152 70,152" fill="none" stroke="#1f252b" stroke-width="1.5" stroke-linejoin="round"/>
+              <!-- bearing pad (elastomer) -->
+              <rect x="150" y="94" width="16" height="6" fill="url(#elastomerGrad)" stroke="#101214" stroke-width="0.8"/>
+              <line x1="150" y1="94" x2="166" y2="94" stroke="#6d767d" stroke-width="0.8" opacity="0.7"/>
+              <!-- beam end (fresh precast, lighter) -->
+              <rect x="150" y="30" width="60" height="64" fill="url(#precastTop)" filter="url(#conc)"/>
+              <rect x="150" y="30" width="60" height="64" fill="url(#aggregate)" opacity="0.4"/>
+              <rect x="150" y="30" width="60" height="64" fill="none" stroke="#1f252b" stroke-width="1.5"/>
+              <line x1="150" y1="30" x2="210" y2="30" stroke="#f2efe9" stroke-width="1.6" opacity="0.9"/>
+              <!-- grout pocket -->
+              <polygon points="162,94 186,94 184,88 164,88" fill="url(#mortarGrad)" filter="url(#concSoft)"/>
+              <polygon points="162,94 186,94 184,88 164,88" fill="none" stroke="#1f252b" stroke-width="1.2"/>
+              <!-- dowels (steel, rust anchors) -->
+              <line x1="158" y1="100" x2="158" y2="84" stroke="url(#steelGrad)" stroke-width="2"/>
+              <line x1="172" y1="100" x2="172" y2="84" stroke="url(#steelGrad)" stroke-width="2"/>
+              <circle cx="158" cy="100" r="2.8" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.8"/>
+              <circle cx="172" cy="100" r="2.8" fill="url(#rustRadial)" stroke="#6e2f12" stroke-width="0.8"/>
+              <!-- ambient occlusion at joints -->
+              <g stroke="#8d867c" stroke-width="1.2" opacity="0.5" fill="none">
+                <line x1="150" y1="94" x2="166" y2="94"/>
+                <line x1="150" y1="100" x2="166" y2="100"/>
+              </g>
+              <!-- leaders + labels -->
+              <g stroke="#5b646d" stroke-width="1">
+                <line x1="180" y1="40" x2="250" y2="56"/>
+                <line x1="158" y1="97" x2="250" y2="80"/>
+                <line x1="175" y1="91" x2="250" y2="104"/>
+                <line x1="158" y1="92" x2="250" y2="128"/>
+                <line x1="110" y1="115" x2="250" y2="152"/>
+                <line x1="36" y1="150" x2="250" y2="184"/>
+              </g>
+              <g fill="#1f252b" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="8.5">
+                <text x="254" y="60">01 · BEAM — PRECAST</text>
+                <text x="254" y="84">02 · ELASTOMERIC PAD</text>
+                <text x="254" y="108">03 · GROUT POCKET</text>
+                <text x="254" y="132">04 · DOWEL — CAST-IN</text>
+                <text x="254" y="156">05 · CORBEL</text>
+                <text x="254" y="188">06 · WALL — PRECAST</text>
+              </g>
+              <text x="30" y="212" class="lbl" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="7.5" fill="#5b646d">STANDARD — NZS 3101 · PRECAST SEATED CONNECTION — GROUTED</text>
+            </svg>
+          </div>
+          <figcaption><span class="f-title">Beam-to-corbel connection — elevation</span><span class="f-sub">Aged wall vs fresh beam tone; elastomer pad, grout pocket, steel dowels with rust anchors.</span></figcaption>
+        </figure>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="mockup-foot">
+    <p><b>Render notes.</b> Shading = per-face linear gradients (light from above: top lightest, front
+    mid, side dark). Materials = feTurbulence mottle filters (<code>conc</code>, <code>concSoft</code>,
+    <code>soilF</code>, <code>woodF</code>) over the gradient fills, plus light aggregate stipple at low
+    opacity. Depth = radial contact shadows under elements, ambient darkening at face junctions, crisp
+    edge lines (Revit "shaded with edges" presentation). Rust-red stays reserved for corrosion, strands,
+    sealant, inserts and annotation — never a large fill. Wood <code>#c9a26f</code>, soil
+    <code>#a8926f</code>, concrete <code>#cfc9bf</code> and steel <code>#9aa3ab</code> are
+    <b>proposed tokens</b>: if approved they become a DESIGN.md §2.1 addition before site code uses
+    them. All figures remain inline SVG — no images, no external requests, crawlable, scale to any
+    width. Promoting this figure system into the site is a component addition (DESIGN.md §3), to be
+    decided after this sketch.</p>
+  </div>
+</div>
+
+<!-- Shared render defs: gradients, mottle filters, patterns -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+
+    <!-- material mottle filters (feTurbulence luminance → alpha → multiply over fill) -->
+    <filter id="conc" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="4" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix"
+        values="0 0 0 0 0.52  0 0 0 0 0.50  0 0 0 0 0.47  0.32 0.32 0.32 0 0" result="m"/>
+      <feBlend in="m" in2="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter id="concSoft" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" seed="3" result="n"/>
+      <feColorMatrix in="n" type="matrix"
+        values="0 0 0 0 0.60  0 0 0 0 0.58  0 0 0 0 0.56  0.22 0.22 0.22 0 0" result="m"/>
+      <feBlend in="m" in2="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter id="soilF" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.35" numOctaves="4" seed="11" result="n"/>
+      <feColorMatrix in="n" type="matrix"
+        values="0 0 0 0 0.40  0 0 0 0 0.36  0 0 0 0 0.30  0.34 0.34 0.34 0 0" result="m"/>
+      <feBlend in="m" in2="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter id="woodF" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.06 0.5" numOctaves="2" seed="5" result="n"/>
+      <feColorMatrix in="n" type="matrix"
+        values="0 0 0 0 0.55  0 0 0 0 0.45  0 0 0 0 0.30  0.2 0.2 0.2 0 0" result="m"/>
+      <feBlend in="m" in2="SourceGraphic" mode="multiply"/>
+    </filter>
+
+    <!-- face shading gradients (light from above) -->
+    <linearGradient id="precastTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9e4db"/><stop offset="1" stop-color="#d3cdc2"/>
+    </linearGradient>
+    <linearGradient id="precastFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9d4ca"/><stop offset="1" stop-color="#c2bcb1"/>
+    </linearGradient>
+    <linearGradient id="precastSide" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b0a99e"/><stop offset="1" stop-color="#948d82"/>
+    </linearGradient>
+    <linearGradient id="slabGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e2ddd3"/><stop offset="1" stop-color="#c9c3b8"/>
+    </linearGradient>
+    <linearGradient id="placingGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfc9bf"/><stop offset="1" stop-color="#b3aca1"/>
+    </linearGradient>
+    <linearGradient id="concDarkGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c6c0b6"/><stop offset="1" stop-color="#a8a196"/>
+    </linearGradient>
+    <linearGradient id="mortarGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9e4da"/><stop offset="1" stop-color="#d4cec3"/>
+    </linearGradient>
+    <linearGradient id="secPlaneGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f1eee7"/><stop offset="1" stop-color="#ddd7cd"/>
+    </linearGradient>
+    <linearGradient id="woodGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d2a976"/><stop offset="1" stop-color="#b68c58"/>
+    </linearGradient>
+    <linearGradient id="studGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c49a66"/><stop offset="1" stop-color="#a67e4e"/>
+    </linearGradient>
+    <linearGradient id="soilGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b3a284"/><stop offset="1" stop-color="#9a8969"/>
+    </linearGradient>
+    <linearGradient id="hardfillGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d8d2c6"/><stop offset="1" stop-color="#c2bbb0"/>
+    </linearGradient>
+
+    <!-- steel, rust, elastomer -->
+    <linearGradient id="steelGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef1f4"/><stop offset="0.5" stop-color="#9aa3ab"/><stop offset="1" stop-color="#6d767d"/>
+    </linearGradient>
+    <radialGradient id="rustRadial" cx="0.35" cy="0.3" r="0.9">
+      <stop offset="0" stop-color="#e59a63"/><stop offset="0.55" stop-color="#b0562c"/><stop offset="1" stop-color="#7e3517"/>
+    </radialGradient>
+    <linearGradient id="rustFill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c4622e"/><stop offset="1" stop-color="#a13f16"/>
+    </linearGradient>
+    <radialGradient id="rustGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c23a17" stop-opacity="0.5"/><stop offset="1" stop-color="#c23a17" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="elastomerGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a3f44"/><stop offset="1" stop-color="#16191c"/>
+    </linearGradient>
+
+    <!-- contact shadow -->
+    <radialGradient id="shadowGrad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#1f252b" stop-opacity="0.32"/><stop offset="0.7" stop-color="#1f252b" stop-opacity="0.12"/><stop offset="1" stop-color="#1f252b" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- surface detail patterns (light overlay, low opacity) -->
+    <pattern id="aggregate" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="4" r="1.2" fill="#8f99a3" opacity="0.7"/>
+      <circle cx="9" cy="2" r="0.8" fill="#8f99a3" opacity="0.5"/>
+      <circle cx="12" cy="9" r="1.4" fill="#8f99a3" opacity="0.65"/>
+      <circle cx="5" cy="11" r="0.9" fill="#8f99a3" opacity="0.45"/>
+    </pattern>
+    <pattern id="aggregate-sec" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#7d8690" opacity="0.7"/>
+      <circle cx="6" cy="6" r="0.8" fill="#98a2ac" opacity="0.6"/>
+    </pattern>
+    <pattern id="soil-dots" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="0.9" fill="#7d7159" opacity="0.8"/>
+      <circle cx="9" cy="8" r="0.7" fill="#7d7159" opacity="0.6"/>
+      <line x1="7" y1="2" x2="10" y2="2" stroke="#7d7159" stroke-width="0.8" opacity="0.5"/>
+    </pattern>
+    <pattern id="hardfill-dots" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="2" fill="#7d8690" opacity="0.85"/>
+      <circle cx="11" cy="10" r="2.2" fill="#7d8690" opacity="0.7"/>
+      <circle cx="9" cy="2" r="1" fill="#7d8690" opacity="0.5"/>
+    </pattern>
+    <pattern id="grain" width="10" height="26" patternUnits="userSpaceOnUse">
+      <path d="M2,0 Q4,8 2,16 T2,26" fill="none" stroke="#a97e4f" stroke-width="1" opacity="0.55"/>
+      <path d="M7,0 Q5,10 7,18 T7,26" fill="none" stroke="#a97e4f" stroke-width="0.8" opacity="0.45"/>
+    </pattern>
+  </defs>
+</svg>
+</body>
+</html>
